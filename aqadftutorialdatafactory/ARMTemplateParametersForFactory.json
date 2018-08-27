@@ -1,1 +1,54 @@
-{}
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "aqadftutorialdatafactory"
+		},
+		"AQAzureStorageLinkedService_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase2_connectionString": {
+			"value": ""
+		},
+		"TestAzureSqlDatabase3_connectionString": {
+			"value": ""
+		},
+		"VelSIT_connectionString": {
+			"value": ""
+		},
+		"Blacklist_Blob_Test_properties_typeProperties_fileName": {
+			"value": "BlacklistTest"
+		},
+		"Blacklist_Blob_Test_properties_typeProperties_folderPath": {
+			"value": "adftutorial/fromonprem"
+		},
+		"Destination_Dataset_BLOB_VelSIT_properties_typeProperties_fileName": {
+			"value": ""
+		},
+		"Destination_Dataset_BLOB_VelSIT_properties_typeProperties_folderPath": {
+			"value": "adftutorial/fromonprem"
+		},
+		"SourceDatasetBlob_properties_typeProperties_fileName": {
+			"value": "\"GENTRACK_VIEW\".\"BI_HUB_GENARGCATEGORY\".txt"
+		},
+		"SourceDatasetBlob_properties_typeProperties_folderPath": {
+			"value": "adftutorial/fromonprem"
+		},
+		"TestAzureBlob1_properties_typeProperties_fileName": {
+			"value": "\"GENTRACK_VIEW\".\"BI_HUB_GENARGCATEGORY\".txt"
+		},
+		"TestAzureBlob1_properties_typeProperties_folderPath": {
+			"value": "adftutorial/fromonprem"
+		},
+		"AQintegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
+			"value": "aqeastusserver1.database.windows.net"
+		},
+		"AQintegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
+			"value": "AQADMIN"
+		},
+		"AQintegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
+			"value": ""
+		}
+	}
+}

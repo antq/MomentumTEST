@@ -6,65 +6,6 @@
 			"type": "string",
 			"metadata": "Data Factory Name",
 			"defaultValue": "aqadftutorialdatafactory"
-		},
-		"AQAzureStorageLinkedService_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AQAzureStorageLinkedService'"
-		},
-		"AzureSqlDatabase2_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase2'"
-		},
-		"TestAzureSqlDatabase3_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'TestAzureSqlDatabase3'"
-		},
-		"VelSIT_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'VelSIT'"
-		},
-		"Blacklist_Blob_Test_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "BlacklistTest"
-		},
-		"Blacklist_Blob_Test_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "adftutorial/fromonprem"
-		},
-		"Destination_Dataset_BLOB_VelSIT_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": ""
-		},
-		"Destination_Dataset_BLOB_VelSIT_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "adftutorial/fromonprem"
-		},
-		"SourceDatasetBlob_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "\"GENTRACK_VIEW\".\"BI_HUB_GENARGCATEGORY\".txt"
-		},
-		"SourceDatasetBlob_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "adftutorial/fromonprem"
-		},
-		"TestAzureBlob1_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "\"GENTRACK_VIEW\".\"BI_HUB_GENARGCATEGORY\".txt"
-		},
-		"TestAzureBlob1_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "adftutorial/fromonprem"
-		},
-		"AQintegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
-			"type": "string",
-			"defaultValue": "aqeastusserver1.database.windows.net"
-		},
-		"AQintegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
-			"type": "string",
-			"defaultValue": "AQADMIN"
-		},
-		"AQintegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
-			"type": "secureString"
 		}
 	},
 	"variables": {
@@ -82,14 +23,12 @@
 						"name": "Blacklist_BLOBTest",
 						"description": "Copy Blacklist Data from Velocity to Azure BLOB",
 						"type": "Copy",
-						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false
 						},
-						"userProperties": [],
 						"typeProperties": {
 							"source": {
 								"type": "OracleSource",
@@ -104,20 +43,17 @@
 						"inputs": [
 							{
 								"referenceName": "BlacklistTest",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "Blacklist_Blob_Test",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					}
-				],
-				"annotations": []
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/BlacklistTest')]",
@@ -133,14 +69,12 @@
 					{
 						"name": "Blacklist_Blob_to_SQLTest",
 						"type": "Copy",
-						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false
 						},
-						"userProperties": [],
 						"typeProperties": {
 							"source": {
 								"type": "BlobSource",
@@ -170,15 +104,13 @@
 						"inputs": [
 							{
 								"referenceName": "Blacklist_Blob_Test",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "LAND_BLACKLIST_TEST",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					},
@@ -200,7 +132,6 @@
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false
 						},
-						"userProperties": [],
 						"typeProperties": {
 							"source": {
 								"type": "SqlSource",
@@ -208,8 +139,7 @@
 							},
 							"dataset": {
 								"referenceName": "LAND_BLACKLIST_TEST",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						}
 					},
@@ -230,7 +160,6 @@
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false
 						},
-						"userProperties": [],
 						"typeProperties": {
 							"storedProcedureName": "[concat('[', 'dbo].[SCDGlobalMerge]')]",
 							"storedProcedureParameters": {
@@ -273,7 +202,6 @@
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false
 						},
-						"userProperties": [],
 						"typeProperties": {
 							"storedProcedureName": "[concat('[', 'dbo].[SCDGlobalMerge]')]",
 							"storedProcedureParameters": {
@@ -316,7 +244,6 @@
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false
 						},
-						"userProperties": [],
 						"typeProperties": {
 							"storedProcedureName": "[concat('[', 'dbo].[SCDGlobalMerge]')]",
 							"storedProcedureParameters": {
@@ -342,13 +269,11 @@
 							"type": "LinkedServiceReference"
 						}
 					}
-				],
-				"annotations": []
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Blacklist_Blob_Test')]",
-				"[concat(variables('factoryId'), '/datasets/LAND_BLACKLIST_TEST')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase2')]"
+				"[concat(variables('factoryId'), '/datasets/LAND_BLACKLIST_TEST')]"
 			]
 		},
 		{
@@ -360,14 +285,12 @@
 					{
 						"name": "Test",
 						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false
 						},
-						"userProperties": [],
 						"typeProperties": {
 							"storedProcedureName": "[concat('[', 'dbo].[aqtestproc]')]",
 							"storedProcedureParameters": {
@@ -390,12 +313,8 @@
 					"whendone": {
 						"type": "String"
 					}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase2')]"
-			]
+				}
+			}
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/MyPlayPipeline2')]",
@@ -414,7 +333,6 @@
 								]
 							}
 						],
-						"userProperties": [],
 						"typeProperties": {
 							"expression": {
 								"value": "@equals(activity('GetBatch').output.firstRow.batch_id,-1)\n\n",
@@ -424,14 +342,12 @@
 								{
 									"name": "AQtest_Success",
 									"type": "SqlServerStoredProcedure",
-									"dependsOn": [],
 									"policy": {
 										"timeout": "7.00:00:00",
 										"retry": 0,
 										"retryIntervalInSeconds": 30,
 										"secureOutput": false
 									},
-									"userProperties": [],
 									"typeProperties": {
 										"storedProcedureName": "[concat('[', 'dbo].[aqtestproc]')]",
 										"storedProcedureParameters": {
@@ -454,14 +370,12 @@
 								{
 									"name": "AQTest_Fail",
 									"type": "SqlServerStoredProcedure",
-									"dependsOn": [],
 									"policy": {
 										"timeout": "7.00:00:00",
 										"retry": 0,
 										"retryIntervalInSeconds": 30,
 										"secureOutput": false
 									},
-									"userProperties": [],
 									"typeProperties": {
 										"storedProcedureName": "[concat('[', 'dbo].[aqtestproc]')]",
 										"storedProcedureParameters": {
@@ -485,7 +399,6 @@
 					{
 						"name": "GetBatch",
 						"type": "Lookup",
-						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,
@@ -493,7 +406,6 @@
 							"secureOutput": false,
 							"secureInput": false
 						},
-						"userProperties": [],
 						"typeProperties": {
 							"source": {
 								"type": "SqlSource",
@@ -504,8 +416,7 @@
 							},
 							"dataset": {
 								"referenceName": "TESTAzureSqlTable1",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						}
 					}
@@ -514,12 +425,10 @@
 					"Batch_ID": {
 						"type": "String"
 					}
-				},
-				"annotations": []
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/TESTAzureSqlTable1')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase2')]"
+				"[concat(variables('factoryId'), '/datasets/TESTAzureSqlTable1')]"
 			]
 		},
 		{
@@ -531,14 +440,12 @@
 					{
 						"name": "Get_Max_GENARGCATEGORY",
 						"type": "Lookup",
-						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false
 						},
-						"userProperties": [],
 						"typeProperties": {
 							"source": {
 								"type": "OracleSource",
@@ -546,8 +453,7 @@
 							},
 							"dataset": {
 								"referenceName": "BlacklistTest",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							},
 							"firstRowOnly": true
 						}
@@ -563,7 +469,6 @@
 								]
 							}
 						],
-						"userProperties": [],
 						"typeProperties": {
 							"expression": {
 								"value": "@less(activity('Get_Max_GENARGCATEGORY').output.firstRow.LAST_UPDATED, adddays(utcnow(),-2))",
@@ -573,8 +478,6 @@
 								{
 									"name": "Wait1",
 									"type": "Wait",
-									"dependsOn": [],
-									"userProperties": [],
 									"typeProperties": {
 										"waitTimeInSeconds": 1
 									}
@@ -584,8 +487,6 @@
 								{
 									"name": "Call_VelSIT_to_Blob",
 									"type": "ExecutePipeline",
-									"dependsOn": [],
-									"userProperties": [],
 									"typeProperties": {
 										"pipeline": {
 											"referenceName": "BlackList_to_BlobTest",
@@ -596,8 +497,7 @@
 							]
 						}
 					}
-				],
-				"annotations": []
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/BlacklistTest')]",
@@ -613,19 +513,16 @@
 					{
 						"name": "Get Metadata1",
 						"type": "GetMetadata",
-						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false
 						},
-						"userProperties": [],
 						"typeProperties": {
 							"dataset": {
 								"referenceName": "SourceDatasetBlob",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							},
 							"fieldList": [
 								"lastModified",
@@ -644,7 +541,6 @@
 								]
 							}
 						],
-						"userProperties": [],
 						"typeProperties": {
 							"expression": {
 								"value": "@less(activity('Get Metadata1').output.lastModified, adddays(utcnow(),-2))",
@@ -654,8 +550,6 @@
 								{
 									"name": "Wait1",
 									"type": "Wait",
-									"dependsOn": [],
-									"userProperties": [],
 									"typeProperties": {
 										"waitTimeInSeconds": 10
 									}
@@ -665,8 +559,6 @@
 								{
 									"name": "Call VelSit to Blob",
 									"type": "ExecutePipeline",
-									"dependsOn": [],
-									"userProperties": [],
 									"typeProperties": {
 										"pipeline": {
 											"referenceName": "BlackList_to_BlobTest",
@@ -677,8 +569,7 @@
 							]
 						}
 					}
-				],
-				"annotations": []
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/SourceDatasetBlob')]",
@@ -694,14 +585,12 @@
 					{
 						"name": "CopyVelSITtoAzure",
 						"type": "Copy",
-						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false
 						},
-						"userProperties": [],
 						"typeProperties": {
 							"source": {
 								"type": "OracleSource"
@@ -715,20 +604,17 @@
 						"inputs": [
 							{
 								"referenceName": "VelSIT_BI_HUB_GENARGCATEGORY",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "Destination_Dataset_BLOB_VelSIT",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					}
-				],
-				"annotations": []
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/VelSIT_BI_HUB_GENARGCATEGORY')]",
@@ -744,14 +630,12 @@
 					{
 						"name": "TEST_COPY_AtoA",
 						"type": "Copy",
-						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false
 						},
-						"userProperties": [],
 						"typeProperties": {
 							"source": {
 								"type": "SqlSource"
@@ -776,20 +660,17 @@
 						"inputs": [
 							{
 								"referenceName": "TESTAzureSqlTable1",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "TestAzureSqlTable2",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					}
-				],
-				"annotations": []
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/TESTAzureSqlTable1')]",
@@ -805,14 +686,12 @@
 					{
 						"name": "TEST_COPY_AtoA",
 						"type": "Copy",
-						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false
 						},
-						"userProperties": [],
 						"typeProperties": {
 							"source": {
 								"type": "BlobSource",
@@ -839,20 +718,17 @@
 						"inputs": [
 							{
 								"referenceName": "TestAzureBlob1",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "TestAzureSqlTable2",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					}
-				],
-				"annotations": []
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/TestAzureBlob1')]",
@@ -868,14 +744,12 @@
 					{
 						"name": "TEST_COPY_AtoA",
 						"type": "Copy",
-						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false
 						},
-						"userProperties": [],
 						"typeProperties": {
 							"source": {
 								"type": "OracleSource"
@@ -900,20 +774,17 @@
 						"inputs": [
 							{
 								"referenceName": "VelSIT_BI_HUB_GENARGCATEGORY",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "TestAzureSqlTable2",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					}
-				],
-				"annotations": []
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/VelSIT_BI_HUB_GENARGCATEGORY')]",
@@ -930,15 +801,11 @@
 					"referenceName": "VelSIT",
 					"type": "LinkedServiceReference"
 				},
-				"annotations": [],
 				"type": "OracleTable",
 				"typeProperties": {
 					"tableName": "\"GENTRACK_VIEW\".\"FLUX_NNC_VIEW\""
 				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/VelSIT')]"
-			]
+			}
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Blacklist_Blob_Test')]",
@@ -949,7 +816,6 @@
 					"referenceName": "AQAzureStorageLinkedService",
 					"type": "LinkedServiceReference"
 				},
-				"annotations": [],
 				"type": "AzureBlob",
 				"structure": [
 					{
@@ -987,13 +853,10 @@
 						"skipLineCount": 0,
 						"firstRowAsHeader": true
 					},
-					"fileName": "[parameters('Blacklist_Blob_Test_properties_typeProperties_fileName')]",
-					"folderPath": "[parameters('Blacklist_Blob_Test_properties_typeProperties_folderPath')]"
+					"fileName": "BlacklistTest",
+					"folderPath": "adftutorial/fromonprem"
 				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AQAzureStorageLinkedService')]"
-			]
+			}
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DestinationDataset_Azure_SQL')]",
@@ -1004,7 +867,6 @@
 					"referenceName": "AzureSqlDatabase2",
 					"type": "LinkedServiceReference"
 				},
-				"annotations": [],
 				"type": "AzureSqlTable",
 				"structure": [
 					{
@@ -1031,10 +893,7 @@
 				"typeProperties": {
 					"tableName": "[concat('[', 'dbo].[PRODDaily]')]"
 				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase2')]"
-			]
+			}
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Destination_Dataset_BLOB_VelSIT')]",
@@ -1045,7 +904,6 @@
 					"referenceName": "AQAzureStorageLinkedService",
 					"type": "LinkedServiceReference"
 				},
-				"annotations": [],
 				"type": "AzureBlob",
 				"structure": [
 					{
@@ -1078,13 +936,10 @@
 						"skipLineCount": 0,
 						"firstRowAsHeader": false
 					},
-					"fileName": "[parameters('Destination_Dataset_BLOB_VelSIT_properties_typeProperties_fileName')]",
-					"folderPath": "[parameters('Destination_Dataset_BLOB_VelSIT_properties_typeProperties_folderPath')]"
+					"fileName": "",
+					"folderPath": "adftutorial/fromonprem"
 				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AQAzureStorageLinkedService')]"
-			]
+			}
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/LAND_BLACKLIST_TEST')]",
@@ -1095,7 +950,6 @@
 					"referenceName": "AzureSqlDatabase2",
 					"type": "LinkedServiceReference"
 				},
-				"annotations": [],
 				"type": "AzureSqlTable",
 				"structure": [
 					{
@@ -1126,10 +980,7 @@
 				"typeProperties": {
 					"tableName": "LAND_BLACKLIST_TEST"
 				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase2')]"
-			]
+			}
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SourceDatasetBlob')]",
@@ -1140,7 +991,6 @@
 					"referenceName": "AQAzureStorageLinkedService",
 					"type": "LinkedServiceReference"
 				},
-				"annotations": [],
 				"type": "AzureBlob",
 				"typeProperties": {
 					"format": {
@@ -1152,13 +1002,10 @@
 						"skipLineCount": 0,
 						"firstRowAsHeader": false
 					},
-					"fileName": "[parameters('SourceDatasetBlob_properties_typeProperties_fileName')]",
-					"folderPath": "[parameters('SourceDatasetBlob_properties_typeProperties_folderPath')]"
+					"fileName": "\"GENTRACK_VIEW\".\"BI_HUB_GENARGCATEGORY\".txt",
+					"folderPath": "adftutorial/fromonprem"
 				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AQAzureStorageLinkedService')]"
-			]
+			}
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/TESTAzureSqlTable1')]",
@@ -1169,7 +1016,6 @@
 					"referenceName": "TestAzureSqlDatabase3",
 					"type": "LinkedServiceReference"
 				},
-				"annotations": [],
 				"type": "AzureSqlTable",
 				"structure": [
 					{
@@ -1196,10 +1042,7 @@
 				"typeProperties": {
 					"tableName": "[concat('[', 'dbo].[BI_HUB_GENARGCATEGORY]')]"
 				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/TestAzureSqlDatabase3')]"
-			]
+			}
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/TestAzureBlob1')]",
@@ -1210,7 +1053,6 @@
 					"referenceName": "AQAzureStorageLinkedService",
 					"type": "LinkedServiceReference"
 				},
-				"annotations": [],
 				"type": "AzureBlob",
 				"structure": [
 					{
@@ -1244,13 +1086,10 @@
 						"skipLineCount": 0,
 						"firstRowAsHeader": false
 					},
-					"fileName": "[parameters('TestAzureBlob1_properties_typeProperties_fileName')]",
-					"folderPath": "[parameters('TestAzureBlob1_properties_typeProperties_folderPath')]"
+					"fileName": "\"GENTRACK_VIEW\".\"BI_HUB_GENARGCATEGORY\".txt",
+					"folderPath": "adftutorial/fromonprem"
 				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AQAzureStorageLinkedService')]"
-			]
+			}
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/TestAzureSqlTable2')]",
@@ -1261,7 +1100,6 @@
 					"referenceName": "TestAzureSqlDatabase3",
 					"type": "LinkedServiceReference"
 				},
-				"annotations": [],
 				"type": "AzureSqlTable",
 				"structure": [
 					{
@@ -1288,10 +1126,7 @@
 				"typeProperties": {
 					"tableName": "[concat('[', 'dbo].[BI_HUB_GENARGCATEGORY2]')]"
 				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/TestAzureSqlDatabase3')]"
-			]
+			}
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/VelSIT_BI_HUB_GENARGCATEGORY')]",
@@ -1303,7 +1138,6 @@
 					"referenceName": "VelSIT",
 					"type": "LinkedServiceReference"
 				},
-				"annotations": [],
 				"type": "OracleTable",
 				"structure": [
 					{
@@ -1330,10 +1164,7 @@
 				"typeProperties": {
 					"tableName": "\"GENTRACK_VIEW\".\"BI_HUB_GENARGCATEGORY\""
 				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/VelSIT')]"
-			]
+			}
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/VelSIT_TEST')]",
@@ -1345,7 +1176,6 @@
 					"referenceName": "VelSIT",
 					"type": "LinkedServiceReference"
 				},
-				"annotations": [],
 				"type": "OracleTable",
 				"structure": [
 					{
@@ -1392,89 +1222,8 @@
 						"name": "PARAMETER_GROUP",
 						"type": "String"
 					}
-				],
-				"typeProperties": {}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/VelSIT')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AQAzureStorageLinkedService')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('AQAzureStorageLinkedService_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "azurePub",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/azurePub')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase2')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureSqlDatabase2_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "azurePub",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/azurePub')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/TestAzureSqlDatabase3')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('TestAzureSqlDatabase3_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "azurePub",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/azurePub')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/VelSIT')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Connection to Velocity SIT",
-				"annotations": [],
-				"type": "Oracle",
-				"typeProperties": {
-					"connectionString": "[parameters('VelSIT_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "integrationRuntime2",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime2')]"
-			]
+				]
+			}
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Hourly')]",
@@ -1482,15 +1231,13 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"description": "Run this pipeline every hour",
-				"annotations": [],
 				"runtimeState": "Started",
 				"pipelines": [
 					{
 						"pipelineReference": {
 							"referenceName": "TestGetMetadata",
 							"type": "PipelineReference"
-						},
-						"parameters": {}
+						}
 					}
 				],
 				"type": "ScheduleTrigger",
@@ -1506,61 +1253,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/TestGetMetadata')]"
 			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AQintegrationRuntime')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "Managed",
-				"description": "Test SSIS Integration",
-				"typeProperties": {
-					"computeProperties": {
-						"location": "East US",
-						"nodeSize": "Standard_D1_v2",
-						"numberOfNodes": 2,
-						"maxParallelExecutionsPerNode": 1
-					},
-					"ssisProperties": {
-						"catalogInfo": {
-							"catalogServerEndpoint": "[parameters('AQintegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint')]",
-							"catalogAdminUserName": "[parameters('AQintegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName')]",
-							"catalogAdminPassword": {
-								"type": "SecureString",
-								"value": "[parameters('AQintegrationRuntime_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword')]"
-							},
-							"catalogPricingTier": "Basic"
-						},
-						"edition": "Standard",
-						"licenseType": "LicenseIncluded"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/azurePub')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "Managed",
-				"typeProperties": {
-					"computeProperties": {
-						"location": "AutoResolve"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/integrationRuntime2')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "SelfHosted",
-				"typeProperties": {}
-			},
-			"dependsOn": []
 		}
 	]
 }
