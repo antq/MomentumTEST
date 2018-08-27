@@ -1,0 +1,39 @@
+{
+	"name": "MyPlayPipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Test",
+				"type": "SqlServerStoredProcedure",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[aqtestproc]",
+					"storedProcedureParameters": {
+						"p_wherefrom": {
+							"value": {
+								"value": "@pipeline().parameters.whendone",
+								"type": "Expression"
+							},
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase2",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"whendone": {
+				"type": "String"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

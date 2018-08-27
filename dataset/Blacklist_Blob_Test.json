@@ -1,0 +1,50 @@
+{
+	"name": "Blacklist_Blob_Test",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AQAzureStorageLinkedService",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureBlob",
+		"structure": [
+			{
+				"name": "CUSTOMER_NO",
+				"type": "String"
+			},
+			{
+				"name": "NAME",
+				"type": "String"
+			},
+			{
+				"name": "PRIMARY_PHONE",
+				"type": "String"
+			},
+			{
+				"name": "SECONDARY_PHONE",
+				"type": "String"
+			},
+			{
+				"name": "MOBILE_PHONE",
+				"type": "String"
+			},
+			{
+				"name": "EMAIL",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": ",",
+				"rowDelimiter": "",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"skipLineCount": 0,
+				"firstRowAsHeader": true
+			},
+			"fileName": "BlacklistTest",
+			"folderPath": "adftutorial/fromonprem"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

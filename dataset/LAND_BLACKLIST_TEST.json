@@ -1,0 +1,40 @@
+{
+	"name": "LAND_BLACKLIST_TEST",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase2",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "CUSTOMER_NO",
+				"type": "Int32"
+			},
+			{
+				"name": "NAME",
+				"type": "String"
+			},
+			{
+				"name": "PRIMARY_PHONE",
+				"type": "String"
+			},
+			{
+				"name": "SECONDARY_PHONE",
+				"type": "String"
+			},
+			{
+				"name": "MOBILE_PHONE",
+				"type": "String"
+			},
+			{
+				"name": "EMAIL",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"tableName": "LAND_BLACKLIST_TEST"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

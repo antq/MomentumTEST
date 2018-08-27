@@ -1,0 +1,111 @@
+{
+	"name": "MyPlayPipeline2",
+	"properties": {
+		"activities": [
+			{
+				"name": "CheckValidBatch",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "GetBatch",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(activity('GetBatch').output.firstRow.batch_id,-1)\n\n",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "AQtest_Success",
+							"type": "SqlServerStoredProcedure",
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false
+							},
+							"typeProperties": {
+								"storedProcedureName": "[dbo].[aqtestproc]",
+								"storedProcedureParameters": {
+									"p_wherefrom": {
+										"value": {
+											"value": "@concat('Run Batch: ',pipeline().parameters.Batch_ID, ' completed successfully')",
+											"type": "Expression"
+										},
+										"type": "String"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureSqlDatabase2",
+								"type": "LinkedServiceReference"
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "AQTest_Fail",
+							"type": "SqlServerStoredProcedure",
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false
+							},
+							"typeProperties": {
+								"storedProcedureName": "[dbo].[aqtestproc]",
+								"storedProcedureParameters": {
+									"p_wherefrom": {
+										"value": {
+											"value": "@concat('Run Batch: ',pipeline().parameters.Batch_ID, ' FAILED!!!!')",
+											"type": "Expression"
+										},
+										"type": "String"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureSqlDatabase2",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "GetBatch",
+				"type": "Lookup",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "SqlSource",
+						"sqlReaderQuery": {
+							"value": "select max(a.batch_id) as batch_id from (\n    select batch_id\n    from NEXT_BATCH\n    where PROCESS = 'BlackListTest'\n    and batch_id = @{pipeline().parameters.Batch_ID}\n    union select -1) a\n",
+							"type": "Expression"
+						}
+					},
+					"dataset": {
+						"referenceName": "TESTAzureSqlTable1",
+						"type": "DatasetReference"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"Batch_ID": {
+				"type": "String"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

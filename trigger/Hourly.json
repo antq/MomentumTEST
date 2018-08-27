@@ -1,0 +1,24 @@
+{
+	"name": "Hourly",
+	"properties": {
+		"description": "Run this pipeline every hour",
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "TestGetMetadata",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 1,
+				"startTime": "2018-08-22T01:12:49.781Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

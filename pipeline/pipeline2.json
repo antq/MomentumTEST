@@ -1,0 +1,53 @@
+{
+	"name": "pipeline2",
+	"properties": {
+		"activities": [
+			{
+				"name": "TEST_COPY_AtoA",
+				"type": "Copy",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000,
+						"preCopyScript": "exec dbo.truncate_bi_hub_genargcategory2"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"Prop_0": "PAYMENT_ARRANGEMENT_CODE",
+							"Prop_1": "PAYMENT_ARRANGEMENT_DESC",
+							"Prop_2": "PAYMENT_ARRANGEMENT_GROUP",
+							"Prop_3": "PAYMENT_ARRANGEMENT_CATEGORY",
+							"Prop_4": "RPT_LAST_UPDATED"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "TestAzureBlob1",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "TestAzureSqlTable2",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

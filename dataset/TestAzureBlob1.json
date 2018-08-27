@@ -1,0 +1,46 @@
+{
+	"name": "TestAzureBlob1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AQAzureStorageLinkedService",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureBlob",
+		"structure": [
+			{
+				"name": "Prop_0",
+				"type": "String"
+			},
+			{
+				"name": "Prop_1",
+				"type": "String"
+			},
+			{
+				"name": "Prop_2",
+				"type": "String"
+			},
+			{
+				"name": "Prop_3",
+				"type": "String"
+			},
+			{
+				"name": "Prop_4",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": ",",
+				"rowDelimiter": "",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"skipLineCount": 0,
+				"firstRowAsHeader": false
+			},
+			"fileName": "\"GENTRACK_VIEW\".\"BI_HUB_GENARGCATEGORY\".txt",
+			"folderPath": "adftutorial/fromonprem"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

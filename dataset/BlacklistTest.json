@@ -1,0 +1,15 @@
+{
+	"name": "BlacklistTest",
+	"properties": {
+		"description": "Test for Blacklist",
+		"linkedServiceName": {
+			"referenceName": "VelSIT",
+			"type": "LinkedServiceReference"
+		},
+		"type": "OracleTable",
+		"typeProperties": {
+			"tableName": "\"GENTRACK_VIEW\".\"FLUX_NNC_VIEW\""
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

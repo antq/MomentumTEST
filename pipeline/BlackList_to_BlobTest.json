@@ -1,0 +1,43 @@
+{
+	"name": "BlackList_to_BlobTest",
+	"properties": {
+		"description": "Copy Blacklist to Azure Blob",
+		"activities": [
+			{
+				"name": "Blacklist_BLOBTest",
+				"description": "Copy Blacklist Data from Velocity to Azure BLOB",
+				"type": "Copy",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"oracleReaderQuery": "SELECT CUSTOMER_NO, 'Blank_name' AS NAME, PRIMARY_PHONE, SECONDARY_PHONE, MOBILE_PHONE, EMAIL\nFROM FLUX_NNC_VIEW"
+					},
+					"sink": {
+						"type": "BlobSink"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "BlacklistTest",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Blacklist_Blob_Test",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

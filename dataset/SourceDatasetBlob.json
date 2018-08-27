@@ -1,0 +1,24 @@
+{
+	"name": "SourceDatasetBlob",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AQAzureStorageLinkedService",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureBlob",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": ",",
+				"rowDelimiter": "",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"skipLineCount": 0,
+				"firstRowAsHeader": false
+			},
+			"fileName": "\"GENTRACK_VIEW\".\"BI_HUB_GENARGCATEGORY\".txt",
+			"folderPath": "adftutorial/fromonprem"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

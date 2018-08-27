@@ -1,0 +1,68 @@
+{
+	"name": "TestCheckVelocityDate",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get_Max_GENARGCATEGORY",
+				"type": "Lookup",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"oracleReaderQuery": "select max(RPT_LAST_UPDATED) AS LAST_UPDATED\nfrom bi_hub_genargcategory"
+					},
+					"dataset": {
+						"referenceName": "BlacklistTest",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": true
+				}
+			},
+			{
+				"name": "Check_RPT_LAST_UPDATED",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "Get_Max_GENARGCATEGORY",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"typeProperties": {
+					"expression": {
+						"value": "@less(activity('Get_Max_GENARGCATEGORY').output.firstRow.LAST_UPDATED, adddays(utcnow(),-2))",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "Wait1",
+							"type": "Wait",
+							"typeProperties": {
+								"waitTimeInSeconds": 1
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "Call_VelSIT_to_Blob",
+							"type": "ExecutePipeline",
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "BlackList_to_BlobTest",
+									"type": "PipelineReference"
+								}
+							}
+						}
+					]
+				}
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

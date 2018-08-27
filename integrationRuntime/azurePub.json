@@ -1,0 +1,11 @@
+{
+	"name": "azurePub",
+	"properties": {
+		"type": "Managed",
+		"typeProperties": {
+			"computeProperties": {
+				"location": "AutoResolve"
+			}
+		}
+	}
+}

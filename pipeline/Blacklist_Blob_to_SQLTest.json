@@ -1,0 +1,211 @@
+{
+	"name": "Blacklist_Blob_to_SQLTest",
+	"properties": {
+		"activities": [
+			{
+				"name": "Blacklist_Blob_to_SQLTest",
+				"type": "Copy",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000,
+						"preCopyScript": "truncate table LAND_BLACKLIST_TEST\n\n-- Get next batch ID\n    INSERT INTO NEXT_BATCH (PROCESS, BATCH_DATE)\n    VALUES ('BlackListTest', GETDATE())",
+						"sqlWriterStoredProcedureName": "[dbo].[spLAND_BLACKLIST]",
+						"sqlWriterTableType": "dbo.LAND_BLACKLIST_TEST"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"CUSTOMER_NO": "CUSTOMER_NO",
+							"NAME": "NAME",
+							"PRIMARY_PHONE": "PRIMARY_PHONE",
+							"SECONDARY_PHONE": "SECONDARY_PHONE",
+							"MOBILE_PHONE": "MOBILE_PHONE",
+							"EMAIL": "EMAIL"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Blacklist_Blob_Test",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "LAND_BLACKLIST_TEST",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "GetBatch",
+				"description": "Get the latest Batch_id",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Blacklist_Blob_to_SQLTest",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "SqlSource",
+						"sqlReaderQuery": "select MAX(BATCH_ID) AS Batch_ID\nfrom NEXT_BATCH\nWHERE Process = 'BlackListTest'"
+					},
+					"dataset": {
+						"referenceName": "LAND_BLACKLIST_TEST",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Exe_GM_BlackList",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "GetBatch",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SCDGlobalMerge]",
+					"storedProcedureParameters": {
+						"Table": {
+							"value": "STG_BLACKLIST_TEST",
+							"type": "String"
+						},
+						"batch_id": {
+							"value": {
+								"value": "@activity('GetBatch').output.firstRow.Batch_ID",
+								"type": "Expression"
+							},
+							"type": "INT"
+						},
+						"RowcountInsertFact": {
+							"value": "0",
+							"type": "INT"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase2",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Exe_GM_Phone",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Exe_GM_BlackList",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SCDGlobalMerge]",
+					"storedProcedureParameters": {
+						"Table": {
+							"value": "STG_BLACKLIST_PHONE_TEST",
+							"type": "String"
+						},
+						"batch_id": {
+							"value": {
+								"value": "@activity('GetBatch').output.firstRow.Batch_ID",
+								"type": "Expression"
+							},
+							"type": "INT"
+						},
+						"RowcountInsertFact": {
+							"value": "0",
+							"type": "INT"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase2",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Exe_GM_EMail",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Exe_GM_BlackList",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SCDGlobalMerge]",
+					"storedProcedureParameters": {
+						"Table": {
+							"value": "STG_BLACKLIST_EMAIL_TEST",
+							"type": "String"
+						},
+						"batch_id": {
+							"value": {
+								"value": "@activity('GetBatch').output.firstRow.Batch_ID",
+								"type": "Expression"
+							},
+							"type": "INT"
+						},
+						"RowcountInsertFact": {
+							"value": "0",
+							"type": "INT"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase2",
+					"type": "LinkedServiceReference"
+				}
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

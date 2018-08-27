@@ -1,0 +1,36 @@
+{
+	"name": "TESTAzureSqlTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TestAzureSqlDatabase3",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "PAYMENT_ARRANGEMENT_CODE",
+				"type": "String"
+			},
+			{
+				"name": "PAYMENT_ARRANGEMENT_DESC",
+				"type": "String"
+			},
+			{
+				"name": "PAYMENT_ARRANGEMENT_GROUP",
+				"type": "String"
+			},
+			{
+				"name": "PAYMENT_ARRANGEMENT_CATEGORY",
+				"type": "String"
+			},
+			{
+				"name": "RPT_LAST_UPDATED",
+				"type": "DateTime"
+			}
+		],
+		"typeProperties": {
+			"tableName": "[dbo].[BI_HUB_GENARGCATEGORY]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
