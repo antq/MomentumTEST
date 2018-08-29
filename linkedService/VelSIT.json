@@ -1,16 +1,22 @@
 {
 	"name": "VelSIT",
-	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"description": "Connection to Velocity SIT",
 		"type": "Oracle",
 		"typeProperties": {
-			"connectionString": "host=wlglnxdev1;port=1527;sid=velsit;user id=gentrack_view",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJiYjZmNzFiOS01MTc0LTQ2ZWQtOTc1MC1kNDRjZjMyYjkyM2EiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"connectionString": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "velSIT2",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "VelSITtest"
+			}
 		},
 		"connectVia": {
 			"referenceName": "integrationRuntime2",
 			"type": "IntegrationRuntimeReference"
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
 }
