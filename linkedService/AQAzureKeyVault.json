@@ -4,7 +4,7 @@
 		"description": "Key Vault for migration",
 		"type": "AzureKeyVault",
 		"typeProperties": {
-			"baseUrl": "https://AQMigrationKeyVault.vault.azure.net/"
+			"baseUrl": "https://AQTestVault.vault.azure.net/"
 		}
 	}
 }
