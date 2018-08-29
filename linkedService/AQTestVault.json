@@ -1,0 +1,10 @@
+{
+	"name": "AQTestVault",
+	"properties": {
+		"description": "Test",
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://AQTestVault.vault.azure.net/"
+		}
+	}
+}
