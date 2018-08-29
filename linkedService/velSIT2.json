@@ -1,0 +1,10 @@
+{
+	"name": "velSIT2",
+	"properties": {
+		"description": "test velsit with key vaukt",
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://AQTestVault.vault.azure.net/"
+		}
+	}
+}
