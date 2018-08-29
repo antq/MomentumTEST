@@ -7,7 +7,7 @@
 			"connectionString": {
 				"type": "AzureKeyVaultSecret",
 				"store": {
-					"referenceName": "AQAzureKeyVault",
+					"referenceName": "velSIT2",
 					"type": "LinkedServiceReference"
 				},
 				"secretName": "velsit"
